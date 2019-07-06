@@ -1,0 +1,9 @@
+Django==2.2.3
+django-appconf==1.0.3
+django-crum==0.7.3
+django-select2==7.0.5
+Pillow==6.0.0
+pytz==2019.1
+simplejson==3.16.0
+six==1.12.0
+sqlparse==0.3.0

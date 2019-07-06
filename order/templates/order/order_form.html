@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Work orders{% endblock title %}
+
+{% block css %}
+
+    <!-- Tag for django-select2 -->
+    {{ form.media.css }}
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="{%  static 'admin_lte/bower_components/bootstrap-datepicker/css/bootstrap-datepicker.min.css'  %}">
+
+{% endblock css %}
+
+{% block content-header %}
+
+    {% if not form.instance.pk %}
+        <h1>New work order</h1>
+    {% else %}
+        <h1>Update work order: {{ object.code }}</h1>
+    {% endif %}
+
+{% endblock content-header %}
+
+{% block content %}
+
+    <form role="form" method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                        {{ field.label|capfirst }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.code.label }}</b>
+                    {{ form.code }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.date_in.label }}</b>
+                    {{ form.date_in }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.date_out.label }}</b>
+                    {{ form.date_out }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.state.label }}</b>
+                    {{ form.state }}
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-4 form-group">
+                    <b>{{ form.client.label }}</b>
+                    {{ form.client }}
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-4 form-group">
+                    <b>{{ form.imei.label }}</b>
+                    {{ form.imei }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.lock_code.label }}</b>
+                    {{ form.lock_code }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.total_value.label }}</b>
+                    {{ form.total_value }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.payment.label }}</b>
+                    {{ form.payment }}
+                </div>
+                <div class="col-xs-6 col-sm-4 col-md-2 form-group">
+                    <b>{{ form.balance.label }}</b>
+                    {{ form.balance }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+                    <b>{{ form.received_by.label }}</b>
+                    {{ form.received_by }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+                    <b>{{ form.delivered_to.label }}</b>
+                    {{ form.delivered_to }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 form-group">
+                    <b>{{ form.technician.label }}</b>
+                    {{ form.technician }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                    <b>{{ form.service.label }}</b>
+                    {{ form.service }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                    <b>{{ form.service_detail.label }}</b>
+                    {{ form.service_detail }}
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                    <b>{{ form.observations.label }}</b>
+                    {{ form.observations }}
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer" style="text-align: right">
+            <a href="{% url 'order:list' %}">
+                <div class="btn btn-default"><span class="fa fa-undo"> <span class="btn-custom-font">Cancel</span></span></div>
+            </a>
+            <button type="submit" class="btn btn-primary"><span class="fa fa-save"> <span class="btn-custom-font">Save</span></span></button>
+        </div>
+    </form>
+
+{% endblock content %}
+
+{% block js %}
+
+    <!-- Tag for django-select2 -->
+    {{ form.media.js }}
+    <!-- bootstrap datepicker -->
+    <script src="{% static 'admin_lte/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'admin_lte/bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function () {
+            //Date picker
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy',
+                language: 'en',
+                todayHighlight: true,
+                todayBtn: 'linked',
+            });
+
+            let select2 = $('.django-select2');
+            let service_select2 = $('#id_service');
+            let current_total_value = $('#id_total_value');
+            let current_payment = $('#id_payment');
+            let current_balance = $('#id_balance');
+
+            select2.djangoSelect2({
+                placeholder: 'Choose an option',
+                escapeMarkup: function (markup) { return markup; },
+                language: {
+                    noResults: function () {
+                        return "No results found. <a href='{% url 'product:create' %}'>Create product or service</a>";
+                    },
+                    inputTooShort: function () {
+                        return "You must enter at least 2 characters";
+                    }
+                }
+            });
+
+            service_select2.on('select2:select', function (e) {
+                let data = e.params.data;
+
+                $.ajax({
+                    type: "GET",
+                    url: "/order/product/ajax/",
+                    data: {
+                        'product_id': data.id,
+                    },
+                    dataType: "json",
+                    success: function(result) {
+                        current_total_value.prop({"value": parseInt(current_total_value.val()) + result.value});
+                        current_balance.prop({"value": parseInt(current_total_value.val()) - current_payment.val()});
+                    },
+                    error: function(rs, e) {
+                        console.log('ERROR product not found.');
+                    }
+                });
+
+            });
+
+            service_select2.on('select2:unselect', function (e) {
+                let current_obj = e.params.data.text.split(" ");
+                current_total_value.prop({"value": parseInt(current_total_value.val()) - current_obj[current_obj.length-1]});
+                current_balance.prop({"value": parseInt(current_total_value.val()) - current_payment.val()});
+            });
+
+            current_payment.keyup(function() {
+                current_balance.prop({"value": parseInt(current_total_value.val()) - current_payment.val()});
+            });
+
+        });
+    </script>
+
+{% endblock js %}

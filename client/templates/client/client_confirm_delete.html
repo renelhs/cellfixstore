@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Clients{% endblock title %}
+
+{% block css %}{% endblock css %}
+
+{% block content-header %}
+
+    <h1>Delete client</h1>
+
+{% endblock content-header %}
+
+{% block content %}
+
+    <form role="form" method="post">
+        {% csrf_token %}
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                    <b>You are sure to delete the client: {{ object.name_surname }}?</b>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer" style="text-align: right">
+            <a href="{% url 'client:list' %}">
+                <div class="btn btn-default"><span class="fa fa-undo"> <b>Cancelr</b></span></div>
+            </a>
+            <button type="submit" class="btn btn-danger"><span class="fa fa-trash"> <b>Delete</b></span></button>
+        </div>
+    </form>
+
+{% endblock content %}
+
+{% block js %}{% endblock js %}

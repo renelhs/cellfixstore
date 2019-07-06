@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Services{% endblock title %}
+
+{% block css %}
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static 'admin_lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+
+{% endblock css %}
+
+{% block content-header %}
+
+    <h1>List of services</h1>
+
+{% endblock content-header %}
+
+{% block content %}
+
+    <div class="box-header">
+        <div class="row">
+            <div class="col-xs-4 col-sm-4 col-md-6">
+                <a href="{% url 'product:create' %}">
+                    <div class="btn btn-primary"><span class="fa fa-plus"> <span class="btn-custom-font">Create</span></span></div>
+                </a>
+            </div>
+            <div class="box-tools col-xs-8 col-sm-8 col-md-6">
+                <input id="table_search" type="text" class="form-control" placeholder="Search">
+            </div>
+        </div>
+    </div>
+
+    <div class="box-body table-responsive">
+        <table id="orders_datatable" class="table table-hover">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Value</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.code }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.value }}</td>
+                    <td style="text-align: right">
+                        <a href="{% url 'product:update' product.id %}">
+                            <div class="btn btn-info btn-sm"><span class="fa fa-edit"></span></div>
+                        </a>
+                        <a href="{% url 'product:delete' product.id %}">
+                            <div class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></div>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}
+
+{% block js %}
+
+    <!-- DataTables -->
+    <script src="{% static 'admin_lte/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin_lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            const table = $('#orders_datatable').DataTable({
+                'paging'      : true,
+                'lengthChange': true,
+                'searching'   : true,
+                'ordering'    : false,
+                'info'        : true,
+                'autoWidth'   : false,
+                'responsive'  : true,
+                'language': {
+                    "lengthMenu": "Showing _MENU_ records per page",
+                    "zeroRecords": "No matches were found for your search",
+                    "info": "Showing page _PAGE_ of _PAGES_",
+                    "infoEmpty": "No services found",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "paginate": {
+                        "previous": "Previous",
+                        "next": "Next"
+                    }
+                }
+            });
+            $('#table_search').on('keyup', function() {
+                table.search( this.value ).draw();
+            });
+            $('#orders_datatable_filter').addClass("hidden");
+        })
+    </script>
+
+{% endblock js %}

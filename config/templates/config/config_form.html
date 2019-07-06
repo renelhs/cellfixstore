@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Configuration{% endblock title %}
+
+{% block css %}
+
+    <!-- Select file widget -->
+    <link href="{% static 'jasny-bootstrap/css/jasny-bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{% static 'admin_lte/plugins/iCheck/all.css' %}">
+
+{% endblock css %}
+
+{% block content-header %}
+
+    <h1>Configuration</h1>
+
+{% endblock content-header %}
+
+{% block content %}
+
+    <form role="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                        {{ field.label|capfirst }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="box-header with-border">
+            <h3 class="box-title">Site</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                    <b>{{ form.site_name.label }}</b>
+                    {{ form.site_name }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-2 form-group">
+                    <b>{{ form.site_name_mini.label }}</b>
+                    {{ form.site_name_mini }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                    <b>{{ form.site_logo.label }} (200x50 px)</b><br>
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 50px; display: flex; justify-content: center;">
+                            {% if object.site_logo %}
+                                <img src="{{ object.site_logo.url }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                              <span class="fileinput-new">Select</span>
+                              <span class="fileinput-exists">Change</span>
+                                {{ form.site_logo }}
+                            </span>
+                            <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Quit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-4 form-group">
+                    <b>{{ form.site_logo_mini.label }} (50x50 px)</b><br>
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 50px; height: 50px; display: flex; justify-content: center;">
+                            {% if object.site_logo_mini %}
+                                <img src="{{ object.site_logo_mini.url }}" alt="">
+                            {% endif %}
+                        </div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                              <span class="fileinput-new">Select</span>
+                              <span class="fileinput-exists">Change</span>
+                                {{ form.site_logo_mini }}
+                            </span>
+                            <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Quit</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-4 form-group">
+                    <b>{{ form.use_site_name.label }}</b><br>
+                    {{ form.use_site_name }}
+                </div>
+            </div>
+        </div>
+
+        <div class="box-header with-border" style="border-top: 1px solid #f4f4f4">
+            <h3 class="box-title">Work orders</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 form-group">
+                    <b>{{ form.order_code_sequence.label }}</b>
+                    {{ form.order_code_sequence }}
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer" style="text-align: right">
+            <button type="submit" class="btn btn-primary"><span class="fa fa-save"> <span class="btn-custom-font">Save</span></span></button>
+        </div>
+    </form>
+
+{% endblock content %}
+
+{% block js %}
+
+    <!-- Select file widget -->
+    <script src="{% static 'jasny-bootstrap/js/jasny-bootstrap.min.js' %}"></script>
+
+    <!-- iCheck 1.0.1 -->
+    <script src="{% static 'admin_lte/plugins/iCheck/icheck.min.js' %}"></script>
+
+    <script>
+
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+        });
+
+    </script>
+
+{% endblock js %}

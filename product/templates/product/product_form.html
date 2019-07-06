@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Services{% endblock title %}
+
+{% block css %}{% endblock css %}
+
+{% block content-header %}
+
+    {% if not form.instance.pk %}
+        <h1>New service</h1>
+    {% else %}
+        <h1>Update service: {{ object.name }}</h1>
+    {% endif %}
+
+{% endblock content-header %}
+
+{% block content %}
+
+    <form role="form" method="post">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                        {{ field.label|capfirst }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 form-group">
+                    <b>{{ form.code.label }}</b>
+                    {{ form.code }}
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-8 form-group">
+                    <b>{{ form.name.label }}</b>
+                    {{ form.name }}
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-4 form-group">
+                    <b>{{ form.value.label }}</b>
+                    {{ form.value }}
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer" style="text-align: right">
+            <a href="{% url 'product:list' %}">
+                <div class="btn btn-default"><span class="fa fa-undo"> <span class="btn-custom-font">Cancel</span></span></div>
+            </a>
+            <button type="submit" class="btn btn-primary"><span class="fa fa-save"> <span class="btn-custom-font">Save</span></span></button>
+        </div>
+    </form>
+
+{% endblock content %}
+
+{% block js %}{% endblock js %}
