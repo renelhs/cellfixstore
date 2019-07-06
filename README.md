@@ -44,3 +44,8 @@ pip install -r requirements.txt
 ```
 
 ###### Access app in http://localhost:8000 with the user you just create.
+
+## Thanks to
+###### https://github.com/ColorlibHQ/AdminLTE for the free template.
+###### All developers who take their time to publish documents, so we can all learn.
+
