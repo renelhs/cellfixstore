@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 ##### Create Django migrations
 ```
-./manage.py createmigrations
+./manage.py makemigrations
 ```
 
 ##### Run migrations to database
