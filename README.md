@@ -1,6 +1,10 @@
 # CellFixStore
 A system for mobile workshops that allows you to keep track of work orders...
 
+## Project 
+
+https://cdn1.imggmi.com/uploads/2019/7/9/d156e489986d33aedf752e9d61cbd275-full.png
+
 ## Setup project
 
 ##### Create directory for your virtual environment
