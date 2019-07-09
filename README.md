@@ -1,6 +1,10 @@
 # CellFixStore
 A system for mobile workshops that allows you to keep track of work orders...
 
+## Project 
+
+<a href="https://imggmi.com" target="_blank"><img src="https://cdn1.imggmi.com/uploads/2019/7/9/d156e489986d33aedf752e9d61cbd275-full.png" border="0"/></a>
+
 ## Setup project
 
 ##### Create directory for your virtual environment
@@ -25,7 +29,7 @@ pip install -r requirements.txt
 
 ##### Create Django migrations
 ```
-./manage.py createmigrations
+./manage.py makemigrations
 ```
 
 ##### Run migrations to database
@@ -44,3 +48,8 @@ pip install -r requirements.txt
 ```
 
 ###### Access app in http://localhost:8000 with the user you just create.
+
+## Thanks to
+###### https://github.com/ColorlibHQ/AdminLTE for the free template.
+###### All developers who take their time to publish documents, so we can all learn.
+
