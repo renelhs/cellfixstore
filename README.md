@@ -3,7 +3,7 @@ A system for mobile workshops that allows you to keep track of work orders...
 
 ## Project 
 
-<a href="https://imggmi.com" target="_blank"><img src="https://cdn1.imggmi.com/uploads/2019/7/9/d156e489986d33aedf752e9d61cbd275-full.png" border="0"/></a>
+![CellFixStore_Login](static/img/CellFixStore_Login.png)
 
 ## Setup project
 
