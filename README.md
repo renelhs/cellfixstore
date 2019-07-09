@@ -2,10 +2,10 @@
 A system for mobile workshops that allows you to keep track of work orders...
 
 ## Project screens
-<p align="center">
+
 ![CellFixStore_Login](static/img/CellFixStore_Login.png)
+
 ![CellFixStore_WorkOrders](static/img/CellFixStore_WorkOrders.png)
-</p>
 
 ## Setup project
 
