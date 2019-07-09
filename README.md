@@ -1,9 +1,10 @@
 # CellFixStore
 A system for mobile workshops that allows you to keep track of work orders...
 
-## Project 
+## Project screens
 
 ![CellFixStore_Login](static/img/CellFixStore_Login.png)
+![CellFixStore_WorkOrders](static/img/CellFixStore_WorkOrders.png)
 
 ## Setup project
 
