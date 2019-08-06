@@ -1,4 +1,4 @@
-Django==2.2.3
+Django==2.2.4
 django-appconf==1.0.3
 django-crum==0.7.3
 django-select2==7.0.5
