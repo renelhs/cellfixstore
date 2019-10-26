@@ -3,6 +3,7 @@ django-appconf==1.0.3
 django-crum==0.7.4
 django-select2==7.1.1
 Pillow==6.2.1
+python-dateutil==2.8.0
 pytz==2019.3
 simplejson==3.16.0
 six==1.12.0

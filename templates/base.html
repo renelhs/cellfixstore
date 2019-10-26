@@ -86,6 +86,11 @@
             </div>
 
             <ul class="sidebar-menu" data-widget="tree">
+                <li class="{% active 'dashboard' %}">
+                    <a href="{% url 'order:dashboard' %}">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
                 <li class="{% active 'order/list|order/create|order/update|order/delete' %}">
                     <a href="{% url 'order:list' %}">
                         <i class="fa fa-list-ul"></i> <span>Work orders</span>
@@ -128,7 +133,7 @@
 
     <footer class="main-footer">
         <div class="pull-right">
-            <b>Version 1.0.0</b>
+            <b>Version 1.1.0</b>
         </div>
         <strong>Copyright &copy; {% now "Y" %} CellFixStore</strong>
     </footer>
