@@ -5,7 +5,7 @@ A system for mobile workshops that allows you to keep track of work orders...
 
 ![CellFixStore_Login](static/img/CellFixStore_Login.png)
 
-![CellFixStore_WorkOrders](static/img/CellFixStore_WorkOrders.png)
+![CellFixStore_WorkOrders](static/img/CellFixStore_Dashboard.png)
 
 ## Setup project
 
