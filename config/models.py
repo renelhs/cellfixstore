@@ -37,15 +37,13 @@ class Configuration(Register, SingletonModel):
     Configuration
     """
     site_name = models.CharField(verbose_name='Name', max_length=18, default='CellFixStore')
-    site_name_mini = models.CharField(verbose_name='Short name', max_length=4, default='CFSP')
-    use_site_name = models.BooleanField(verbose_name="Logo names", default=True)
-    site_logo = models.ImageField(verbose_name='Logo', upload_to="logos", blank=True, null=True)
-    site_logo_mini = models.ImageField(verbose_name='Logo mini', upload_to="logos", blank=True, null=True)
-    order_code_sequence = models.IntegerField(verbose_name='Code sequence Work orders',
+    site_logo_mini = models.ImageField(verbose_name='Logo Mini', upload_to="logos", blank=True, null=True)
+    order_code_sequence = models.IntegerField(verbose_name='Code Sequence for Work Orders',
                                               default=1, validators=[MaxValueValidator(999999999)])
 
     class Meta:
         verbose_name = "Configuration"
+        verbose_name_plural = "Configurations"
 
     def __str__(self):
         return "Configuration"

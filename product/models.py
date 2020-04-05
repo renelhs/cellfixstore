@@ -22,5 +22,7 @@ class Product(Register):
         return self.name + ' | ' + str(self.value)
 
     class Meta:
+        verbose_name = "Product"
+        verbose_name_plural = "Products"
         ordering = ['code']
 

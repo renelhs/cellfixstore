@@ -1,70 +1,72 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Work orders{% endblock title %}
+{% block title %}Work Orders{% endblock title %}
 
 {% block css %}
 
     <!-- DataTables -->
-    <link rel="stylesheet" href="{% static 'admin_lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
 
 {% endblock css %}
 
 {% block content-header %}
 
-    <h1>List of work orders</h1>
+    <h1>List of Work Orders</h1>
 
 {% endblock content-header %}
 
 {% block content %}
 
-    <div class="box-header">
-        <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-6">
-                <a href="{% url 'order:create' %}">
-                    <div class="btn btn-primary"><span class="fa fa-plus"> <span class="btn-custom-font">Create</span></span></div>
-                </a>
-            </div>
-            <div class="box-tools col-xs-8 col-sm-8 col-md-6">
-                <input id="table_search" type="text" class="form-control" placeholder="Search">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-6">
+                    <a href="{% url 'order:create' %}">
+                        <div class="btn btn-primary"><span class="fa fa-plus"> <span class="btn-custom-font">Create</span></span></div>
+                    </a>
+                </div>
+                <div class="box-tools col-xs-8 col-sm-8 col-md-6">
+                    <input id="table_search" type="text" class="form-control" placeholder="Search">
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="box-body table-responsive">
-        <table id="orders_datatable" class="table table-hover">
-            <thead>
-            <tr>
-                <th>Code</th>
-                <th>Start date</th>
-                <th>End date</th>
-                <th>IMEI</th>
-                <th>Client</th>
-                <th>State</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
-                <tr>
-                    <td>{{ order.code | stringformat:"09d" }}</td>
-                    <td>{{ order.date_in | date:'d/m/Y' }}</td>
-                    <td>{{ order.date_out | date:'d/m/Y' }}</td>
-                    <td>{{ order.imei }}</td>
-                    <td>{{ order.client }}</td>
-                    <td>{{ order.get_state_display }}</td>
-                    <td style="text-align: right">
-                        <a href="{% url 'order:update' order.id %}">
-                            <div class="btn btn-info btn-sm"><span class="fa fa-edit"></span></div>
-                        </a>
-                        <a href="{% url 'order:delete' order.id %}">
-                            <div class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></div>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        <div class="card-body">
+            <table id="orders_datatable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>IMEI</th>
+                        <th>Client</th>
+                        <th>State</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.code | stringformat:"09d" }}</td>
+                            <td>{{ order.date_in | date:'d/m/Y' }}</td>
+                            <td>{{ order.date_out | date:'d/m/Y' }}</td>
+                            <td>{{ order.imei }}</td>
+                            <td>{{ order.client }}</td>
+                            <td>{{ order.get_state_display }}</td>
+                            <td style="text-align: right">
+                                <a href="{% url 'order:update' order.id %}">
+                                    <div class="btn btn-info btn-sm"><span class="fa fa-edit"></span></div>
+                                </a>
+                                <a href="{% url 'order:delete' order.id %}">
+                                    <div class="btn btn-danger btn-sm"><span class="fa fa-trash"></span></div>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 {% endblock content %}
@@ -72,35 +74,25 @@
 {% block js %}
 
     <!-- DataTables -->
-    <script src="{% static 'admin_lte/bower_components/datatables.net/js/jquery.dataTables.min.js' %}"></script>
-    <script src="{% static 'admin_lte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'admin_lte/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'admin_lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
 
     <script>
         $(function () {
-            const table = $('#orders_datatable').DataTable({
-                'paging'      : true,
-                'lengthChange': true,
-                'searching'   : true,
-                'ordering'    : false,
-                'info'        : true,
-                'autoWidth'   : false,
-                'responsive'  : true,
-                'language': {
-                    "lengthMenu": "Showing _MENU_ records per page",
-                    "zeroRecords": "No matches were found for your search",
-                    "info": "Showing page _PAGE_ of _PAGES_",
-                    "infoEmpty": "No work orders were found",
-                    "infoFiltered": "(filtered from _MAX_ total records)",
-                    "paginate": {
-                        "previous": "Previous",
-                        "next": "Next"
-                    }
-                }
+            const orders_datatable = $('#orders_datatable').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
             });
+
             $('#table_search').on('keyup', function() {
-                table.search( this.value ).draw();
+                orders_datatable.search(this.value).draw();
             });
-            $('#orders_datatable_filter').addClass("hidden");
+            $('#orders_datatable_filter').hide();
         })
     </script>
 
