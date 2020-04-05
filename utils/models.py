@@ -7,8 +7,8 @@ class Register(models.Model):
     """
     Abstract class that register changes in all models.
     """
-    create_date = models.DateTimeField(verbose_name="Create date", auto_now_add=True, editable=False)
-    write_date = models.DateTimeField(verbose_name="Write date", auto_now=True, editable=False)
+    create_date = models.DateTimeField(verbose_name="Create Date", auto_now_add=True, editable=False)
+    write_date = models.DateTimeField(verbose_name="Write Date", auto_now=True, editable=False)
     create_uid = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="Create by", editable=False,
                                    on_delete=models.CASCADE, blank=True, null=True,
                                    related_name="%(app_label)s_%(class)s_create_uid")

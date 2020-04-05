@@ -8,9 +8,9 @@
 {% block content-header %}
 
     {% if not form.instance.pk %}
-        <h1>New client</h1>
+        <h1>New Client</h1>
     {% else %}
-        <h1>Update client: {{ object.name_surname }}</h1>
+        <h1>Update Client: {{ object.name_surname }}</h1>
     {% endif %}
 
 {% endblock content-header %}
@@ -37,36 +37,38 @@
             {% endfor %}
         {% endif %}
 
-        <div class="box-body">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-4 form-group">
-                    <b>{{ form.identification.label }}</b>
-                    {{ form.identification }}
-                </div>
-                <div class="col-xs-12 col-sm-8 col-md-8 form-group">
-                    <b>{{ form.name_surname.label }}</b>
-                    {{ form.name_surname }}
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 form-group">
-                    <b>{{ form.email.label }}</b>
-                    {{ form.email }}
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 form-group">
-                    <b>{{ form.phone.label }}</b>
-                    {{ form.phone }}
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
-                    <b>{{ form.address.label }}</b>
-                    {{ form.address }}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 form-group">
+                        <b>{{ form.identification.label }}</b>
+                        {{ form.identification }}
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 form-group">
+                        <b>{{ form.name_surname.label }}</b>
+                        {{ form.name_surname }}
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                        <b>{{ form.email.label }}</b>
+                        {{ form.email }}
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                        <b>{{ form.phone.label }}</b>
+                        {{ form.phone }}
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                        <b>{{ form.address.label }}</b>
+                        {{ form.address }}
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="box-footer" style="text-align: right">
             <a href="{% url 'client:list' %}">
-                <div class="btn btn-default"><span class="fa fa-undo"> <span class="btn-custom-font">Cancel</span></span></div>
+                <div class="btn btn-default"><span class="fas fa-ban"> <span class="btn-custom-font">Cancel</span></span></div>
             </a>
-            <button type="submit" class="btn btn-primary"><span class="fa fa-save"> <span class="btn-custom-font">Save</span></span></button>
+            <button type="submit" class="btn btn-primary"><span class="fas fa-save"> <span class="btn-custom-font">Save</span></span></button>
         </div>
     </form>
 

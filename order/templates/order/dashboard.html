@@ -14,28 +14,30 @@
 
 {% block content %}
 
-    <div class="box-header with-border">
-        <h3 class="box-title">Monthly work orders</h3>
-    </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="chart">
-                    <canvas id="ordersChart" style="height: 180px;"></canvas>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                Work Orders
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="chart tab-pane active" id="orders-chart" style="position: relative; height: 300px;">
+                <canvas id="orders-chart-canvas" height="300" style="height: 300px;"></canvas>
             </div>
         </div>
     </div>
 
-    <div class="box-header with-border">
-        <h3 class="box-title">Monthly incomes</h3>
-    </div>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="chart">
-                    <canvas id="salesChart" style="height: 180px;"></canvas>
-                </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-chart-pie mr-1"></i>
+                Incomes
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                <canvas id="incomes-chart-canvas" height="300" style="height: 300px;"></canvas>
             </div>
         </div>
     </div>
@@ -45,70 +47,86 @@
 {% block js %}
 
     <!-- ChartJS -->
-    <script type="text/javascript" src="{% static 'admin_lte/bower_components/chart.js/Chart.js' %}"></script>
+    <script type="text/javascript" src="{% static 'admin_lte/plugins/chart.js/Chart.js' %}"></script>
 
     <script>
         $(function () {
             'use strict';
+
+            /* Chart.js Charts */
             let chartOptions = {
-                showScale               : true,
-                scaleShowGridLines      : false,
-                scaleGridLineColor      : 'rgba(0,0,0,.05)',
-                scaleGridLineWidth      : 1,
-                scaleShowHorizontalLines: true,
-                scaleShowVerticalLines  : true,
-                bezierCurve             : true,
-                bezierCurveTension      : 0.3,
-                pointDot                : false,
-                pointDotRadius          : 4,
-                pointDotStrokeWidth     : 1,
-                pointHitDetectionRadius : 20,
-                datasetStroke           : true,
-                datasetStrokeWidth      : 2,
-                datasetFill             : true,
-                maintainAspectRatio     : true,
-                responsive              : true
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false,
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false,
+                        },
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function (value) {
+                                if (value % 1 === 0) {
+                                    return value;
+                                }
+                            }
+                        }
+                    }]
+                }
             };
 
-            // Create the line orders chart
-            let ordersChartCanvas = $('#ordersChart').get(0).getContext('2d');
-            let ordersChart       = new Chart(ordersChartCanvas);
+            // Orders chart
+            let ordersChartCanvas = document.getElementById('orders-chart-canvas').getContext('2d');
             let ordersChartData = {
-                labels  : {{ labels|safe }},
+                labels: {{labels|safe}},
                 datasets: [
                     {
-                        label               : 'Work orders',
-                        fillColor           : 'rgb(75,222,123)',
-                        strokeColor         : 'rgb(210, 214, 222)',
-                        pointColor          : 'rgb(210, 214, 222)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgb(220,220,220)',
-                        data                : {{ month_orders }}
+                        label: 'Work Orders',
+                        backgroundColor: 'rgba(60,141,188,0.81)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointHighlightFill: '#fff',
+                        radius: 5,
+                        pointRadius: 5,
+                        data: {{ month_orders }}
                     }
                 ]
             };
-            ordersChart.Line(ordersChartData, chartOptions);
+            let ordersChart = new Chart(ordersChartCanvas, {
+                    type: 'line',
+                    data: ordersChartData,
+                    options: chartOptions
+                }
+            );
 
-            // Create the line sales chart
-            let salesChartCanvas = $('#salesChart').get(0).getContext('2d');
-            let salesChart = new Chart(salesChartCanvas);
-            let salesChartData = {
-                labels  : {{ labels|safe }},
+            // Incomes chart
+            let incomesChartCanvas = document.getElementById('incomes-chart-canvas').getContext('2d');
+            let incomesChartData = {
+                labels: {{labels|safe}},
                 datasets: [
                     {
-                        label               : 'Incomes',
-                        fillColor           : 'rgba(60,141,188,0.9)',
-                        strokeColor         : 'rgba(60,141,188,0.8)',
-                        pointColor          : '#3b8bba',
-                        pointStrokeColor    : 'rgba(60,141,188,1)',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data                : {{ month_incomes }}
+                        label: 'Incomes',
+                        backgroundColor: 'rgba(95,188,68,0.81)',
+                        borderColor: 'rgba(95,188,68,0.88)',
+                        pointHighlightFill: '#fff',
+                        radius: 5,
+                        pointRadius: 5,
+                        data: {{ month_incomes }}
                     }
                 ]
             };
-            salesChart.Line(salesChartData, chartOptions);
+            let incomesChart = new Chart(incomesChartCanvas, {
+                    type: 'line',
+                    data: incomesChartData,
+                    options: chartOptions
+                }
+            );
         });
     </script>
 

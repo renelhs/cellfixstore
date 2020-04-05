@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Services{% endblock title %}
+{% block title %}Products and Services{% endblock title %}
 
 {% block css %}{% endblock css %}
 
 {% block content-header %}
 
-    <h1>Delete service</h1>
+    <h1>Delete Product or Service</h1>
 
 {% endblock content-header %}
 
@@ -16,19 +16,21 @@
     <form role="form" method="post">
         {% csrf_token %}
 
-        <div class="box-body">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 form-group">
-                    <b>You are sure to delete the service: {{ object.name }}?</b>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                        <b>Are you sure you want to remove the product or service: {{ object.name }}?</b>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="box-footer" style="text-align: right">
             <a href="{% url 'product:list' %}">
-                <div class="btn btn-default"><span class="fa fa-undo"> <b>Cancel</b></span></div>
+                <div class="btn btn-default"><span class="fas fa-ban"> <span class="btn-custom-font">Cancel</span></span></div>
             </a>
-            <button type="submit" class="btn btn-danger"><span class="fa fa-trash"> <b>Eliminar</b></span></button>
+            <button type="submit" class="btn btn-danger"><span class="fas fa-trash"> <span class="btn-custom-font">Delete</span></span></button>
         </div>
     </form>
 

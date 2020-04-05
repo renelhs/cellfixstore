@@ -17,12 +17,6 @@ class ConfigurationUpdateView(LoginRequiredMixin, UpdateView):
         configuration = Configuration.objects.all()[:1].get()
 
         try:
-            if 'site_logo' in form.changed_data and configuration.site_logo:
-                site_logo_dir = configuration.site_logo.path
-
-                if site_logo_dir and os.path.isfile(site_logo_dir):
-                    os.remove(site_logo_dir)
-
             if 'site_logo_mini' in form.changed_data and configuration.site_logo_mini:
                 site_logo_mini_dir = configuration.site_logo_mini.path
 
